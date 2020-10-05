@@ -1,4 +1,5 @@
 import { emitControl } from "./SocketService";
+
 export const horizontalSwipe = (endX: Number, startX: Number) => {
   if (endX > startX) {
     emitControl("audio/next");
@@ -30,7 +31,6 @@ export const detectVerticalSwipe = (
   setPreviousY: (value: React.SetStateAction<number>) => void
 ) => {
   const diff = previousY - y;
-
   if (diff < 0) {
     const diff = y - triggerY;
     if (diff > 30) {
@@ -38,7 +38,6 @@ export const detectVerticalSwipe = (
       setTriggerY(y);
     }
   }
-
   if (diff > 0) {
     const diff = triggerY - y;
     if (diff > 30) {
@@ -46,6 +45,5 @@ export const detectVerticalSwipe = (
       setTriggerY(y);
     }
   }
-
   setPreviousY(y);
 };

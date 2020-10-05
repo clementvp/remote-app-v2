@@ -15,11 +15,14 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
+import { add, linkOutline, trashOutline } from "ionicons/icons";
 import React, { useCallback, useContext, useEffect } from "react";
 import { Redirect, RouteComponentProps } from "react-router";
-import { ConnexionContext } from "../../components/contexts/ConnexionContext";
 import { Plugins } from "@capacitor/core";
 
+import { ConnexionContext } from "../../components/contexts/ConnexionContext";
+import { ServerContext } from "../../components/contexts/ServersContext";
+import { ServerItem } from "../../types/ServerItem";
 import {
   addStorageLastConnexion,
   resetStorageLastConnexion,
@@ -30,10 +33,6 @@ import {
   subscribeToConnexionError,
   subscribeToServer,
 } from "../../services/SocketService";
-
-import { add, linkOutline, trashOutline } from "ionicons/icons";
-import { ServerContext } from "../../components/contexts/ServersContext";
-import { ServerItem } from "../../types/ServerItem";
 
 import styles from "./Home.module.scss";
 

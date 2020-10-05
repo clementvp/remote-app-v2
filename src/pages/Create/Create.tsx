@@ -13,13 +13,13 @@ import {
   IonButton,
 } from "@ionic/react";
 import React, { useContext, useState } from "react";
+import { RouteComponentProps } from "react-router";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner";
 import shortId from "shortid";
 
-import styles from "./Create.module.scss";
-
-import { RouteComponentProps } from "react-router";
 import { ServerContext } from "../../components/contexts/ServersContext";
+
+import styles from "./Create.module.scss";
 
 const Create: React.FC<RouteComponentProps> = ({ history }) => {
   const [serverName, setServerName] = useState("");
