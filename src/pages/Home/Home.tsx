@@ -105,7 +105,9 @@ const Home: React.FC<RouteComponentProps> = ({ history }) => {
           return (
             <IonItemSliding key={item.id}>
               <IonItem className={styles.items} lines="none">
-                <IonLabel>{item.name}</IonLabel>
+                <IonLabel>
+                  {item.name} ({item.address})
+                </IonLabel>
                 <IonButton
                   onClick={() => {
                     connect(item.address);
