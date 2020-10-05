@@ -1,5 +1,6 @@
 import { ServerItem } from "../types/ServerItem";
 import { Plugins } from "@capacitor/core";
+
 const { Storage } = Plugins;
 
 let serverList: Array<ServerItem> = [];
