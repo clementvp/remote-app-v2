@@ -2,6 +2,7 @@ import {
   IonContent,
   IonFab,
   IonFabButton,
+  IonFabList,
   IonHeader,
   IonIcon,
   IonPage,
@@ -19,12 +20,13 @@ import {
   disconnectSocket,
   subscribeToDisconnectServer,
 } from "../../services/SocketService";
-import { logOutOutline } from "ionicons/icons";
+import { cogOutline, lockClosedOutline, logOutOutline } from "ionicons/icons";
 import {
   detectDrag,
   detectVerticalSwipe,
   tap,
 } from "../../services/DetectGestures";
+import { lockComputer } from "../../services/Commands";
 
 import styles from "./Controls.module.scss";
 
@@ -108,6 +110,16 @@ const Controls: React.FC = (props) => {
           <IonFabButton color="danger" onClick={disconnect}>
             <IonIcon icon={logOutOutline} />
           </IonFabButton>
+        </IonFab>
+        <IonFab vertical="bottom" horizontal="start" slot="fixed">
+          <IonFabButton color="primary">
+            <IonIcon icon={cogOutline} />
+          </IonFabButton>
+          <IonFabList side="top">
+            <IonFabButton onClick={lockComputer}>
+              <IonIcon icon={lockClosedOutline} />
+            </IonFabButton>
+          </IonFabList>
         </IonFab>
       </IonContent>
     </IonPage>
