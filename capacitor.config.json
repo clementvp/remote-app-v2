@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "remote-app",
+  "appId": "com.vanpeuter.remote",
+  "appName": "Remote",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
