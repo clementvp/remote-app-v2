@@ -33,14 +33,14 @@ export const detectVerticalSwipe = (
   const diff = previousY - y;
   if (diff < 0) {
     const diff = y - triggerY;
-    if (diff > 30) {
+    if (diff > 20) {
       emitControl("audio/vol/down");
       setTriggerY(y);
     }
   }
   if (diff > 0) {
     const diff = triggerY - y;
-    if (diff > 30) {
+    if (diff > 20) {
       emitControl("audio/vol/up");
       setTriggerY(y);
     }
