@@ -114,7 +114,6 @@ const Controls: React.FC = (props) => {
 
   const [keyboardOpen, setKeyboardOpen] = useState(false);
 
-  /*
   useEffect(() => {
     const showListner = Keyboard.addListener("keyboardDidShow", () => {
       setKeyboardOpen(true);
@@ -128,7 +127,6 @@ const Controls: React.FC = (props) => {
     };
   }, []);
 
-  */
   if (!connected) {
     return <Redirect to="/home"></Redirect>;
   }
