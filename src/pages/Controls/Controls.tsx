@@ -9,7 +9,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router";
 import { Plugins } from "@capacitor/core";
 import { useGesture } from "react-use-gesture";
@@ -18,9 +18,11 @@ import { ConnexionContext } from "../../components/contexts/ConnexionContext";
 import { resetStorageLastConnexion } from "../../services/StorageService";
 import {
   disconnectSocket,
+  emitStringPayload,
   subscribeToDisconnectServer,
 } from "../../services/SocketService";
 import {
+  appsOutline,
   cogOutline,
   lockClosedOutline,
   logOutOutline,
@@ -35,10 +37,11 @@ import { lockComputer, mute } from "../../services/Commands";
 
 import styles from "./Controls.module.scss";
 
-const { App } = Plugins;
+const { App, Keyboard } = Plugins;
 
 const Controls: React.FC = (props) => {
   const { connected, setConnected } = useContext(ConnexionContext);
+
   const [startX, setStartX] = useState(0);
   const [startY, setStartY] = useState(0);
   const [previousY, setPreviousY] = useState(0);
@@ -60,6 +63,17 @@ const Controls: React.FC = (props) => {
       setConnected(false);
     });
   });
+
+  const handleUserKeypress = useCallback((event: any) => {
+    emitStringPayload("keyboard/char", event.key);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleUserKeypress);
+    return () => {
+      window.removeEventListener("keydown", handleUserKeypress);
+    };
+  }, [handleUserKeypress]);
 
   const bind = useGesture(
     {
@@ -98,6 +112,21 @@ const Controls: React.FC = (props) => {
     disconnectSocket();
   };
 
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
+
+  useEffect(() => {
+    const showListner = Keyboard.addListener("keyboardDidShow", () => {
+      setKeyboardOpen(true);
+    });
+    const hideLister = Keyboard.addListener("keyboardDidHide", () => {
+      setKeyboardOpen(false);
+    });
+    return () => {
+      showListner.remove();
+      hideLister.remove();
+    };
+  }, []);
+
   if (!connected) {
     return <Redirect to="/home"></Redirect>;
   }
@@ -110,7 +139,9 @@ const Controls: React.FC = (props) => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <div className={styles.controlArea} {...bind()}></div>
+        {!keyboardOpen && (
+          <div className={styles.controlArea} {...bind()}></div>
+        )}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton color="danger" onClick={disconnect}>
             <IonIcon icon={logOutOutline} />
@@ -126,6 +157,13 @@ const Controls: React.FC = (props) => {
             </IonFabButton>
             <IonFabButton onClick={mute}>
               <IonIcon icon={volumeMuteOutline} />
+            </IonFabButton>
+            <IonFabButton
+              onClick={async () => {
+                await Keyboard.show();
+              }}
+            >
+              <IonIcon icon={appsOutline} />
             </IonFabButton>
           </IonFabList>
         </IonFab>

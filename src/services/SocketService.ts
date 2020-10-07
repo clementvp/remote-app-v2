@@ -39,6 +39,10 @@ export const emitControl = (message: string) => {
   if (socket) socket.emit(message);
 };
 
+export const emitStringPayload = (message: string, payload: string) => {
+  if (socket) socket.emit(message, payload);
+};
+
 export const getSocketStatus = () => {
   if (socket) return socket.connected;
 };
